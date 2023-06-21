@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Address Book</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+        
+    </head>
+    <body>
+    <div style="background: content-box radial-gradient(rgb(0 0 0 / 8%), #5d7159);">
+        <div th:switch="${addresss}" class="container my-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <div thucase="*">
+                        <h2 class="my-2" style="text-align: center; background-color: #38904c">Address Book</h2>
+                        <table class="table">
+                            <thead class="thead-light"> 
+                                <tr>
+                                   <th>Name</th>
+                                   <th>Email</th>
+                                   <th>Phone</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="address : ${addresss}">
+                                    <td th:text="${address.name}"></td>
+                                    <td th:text="${address.email}"></td>
+                                    <td th:text="${address.phone}"></td>
+                                    <td><a th:href="@{/edit/{id}(id=${address.id})}" class="btn btn-secondary"><i class="fas fa-address-edit ml-2"></i>Edit</a></td>
+                                    <td><a th:href="@{/delete/{id}(id=${address.id})}" class="btn btn-danger"><i class="fas fa-address-times ml-2"></i>Delete</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>    
+                      
+                    <p class="my-5"><a href="/addaddress" class="btn btn-success" style="background-color: #38904c"><i class="fas fa-address-plus ml-2"></i>Add Address</a></p>    				  
+    				<h3>Total page Hits: <span id="count"></span></h3>
+    				
+                </div>
+            </div>
+        </div>
+        </div>
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<script>
+		 $( document ).ready(function() {
+            var intervalId = window.setInterval(function () {
+                $.get("http://localhost:8080/countTotal", function (data, status) {
+                     $('#count').html( data );
+                });
+            }, 3000);
+            });
+	</script> 
+</html>
